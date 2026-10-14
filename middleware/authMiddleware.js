@@ -23,10 +23,7 @@ const requireAuth = (req, res, next) => {
 const requireRole = (...roles) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {
-      return res.status(403).render('order', {
-        orders: [],
-        error: 'Access denied: You do not have permission for this action.',
-      });
+      return res.redirect('/orders?error=Access denied: Only Admin can delete orders.');
     }
     next();
   };

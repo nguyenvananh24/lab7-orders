@@ -3,7 +3,8 @@ const Product = require('../models/productModel');
 
 const getOrders = async (req, res) => {
   const orders = await Order.find().sort({ orderDate: -1 });
-  res.render('order', { orders });
+  const error = req.query.error || null;
+  res.render('order', { orders, error });
 };
 
 const getCreateOrderForm = async (req, res) => {

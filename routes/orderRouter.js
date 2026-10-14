@@ -8,7 +8,7 @@ const {
   updateOrder,
   deleteOrder,
 } = require('../controllers/orderController');
-const { requireAuth } = require('../middleware/authMiddleware');
+const { requireAuth, requireRole } = require('../middleware/authMiddleware');
 
 router.use(requireAuth);
 
@@ -17,6 +17,8 @@ router.get('/create', getCreateOrderForm);
 router.post('/create', createOrder);
 router.get('/update/:orderId', getUpdateOrderForm);
 router.post('/update/:orderId', updateOrder);
-router.post('/delete/:orderId', deleteOrder);
+
+// Only admin role can delete orders
+router.post('/delete/:orderId', requireRole('admin'), deleteOrder);
 
 module.exports = router;
